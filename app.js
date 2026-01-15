@@ -2,6 +2,7 @@ let recettes = JSON.parse(localStorage.getItem("recettes")) || [];
 
 const container = document.getElementById("recettes");
 const ingredientsDiv = document.getElementById("ingredients");
+const listeCourses = document.getElementById("liste-courses");
 
 function ajouterIngredient() {
   const div = document.createElement("div");
@@ -56,7 +57,11 @@ function afficherRecettes() {
     fiche.className = "fiche-recette";
 
     fiche.innerHTML = `
-      <h2>${recette.nom}</h2>
+      <label>
+        <input type="checkbox" onchange="calculerListeCourses()"
+               data-id="${recette.id}">
+        <strong>${recette.nom}</strong>
+      </label>
       <span class="categorie">${recette.categorie}</span>
 
       <h3>🧾 Ingrédients</h3>
@@ -74,6 +79,45 @@ function afficherRecettes() {
     `;
 
     container.appendChild(fiche);
+  });
+}
+
+function calculerListeCourses() {
+  const selection = document.querySelectorAll(
+    'input[type="checkbox"]:checked'
+  );
+
+  const courses = {};
+
+  selection.forEach(checkbox => {
+    const id = Number(checkbox.dataset.id);
+    const recette = recettes.find(r => r.id === id);
+
+    recette.ingredients.forEach(i => {
+      const cle = i.nom + "_" + i.unite;
+
+      if (!courses[cle]) {
+        courses[cle] = {
+          nom: i.nom,
+          unite: i.unite,
+          quantite: 0
+        };
+      }
+
+      courses[cle].quantite += i.quantite;
+    });
+  });
+
+  afficherListeCourses(Object.values(courses));
+}
+
+function afficherListeCourses(items) {
+  listeCourses.innerHTML = "";
+
+  items.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.quantite} ${item.unite} - ${item.nom}`;
+    listeCourses.appendChild(li);
   });
 }
 
