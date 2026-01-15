@@ -18,4 +18,30 @@ li {
   margin-bottom: 10px;
   padding: 12px;
   border-radius: 8px;
+
+}
+.fiche-recette {
+  background: white;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.categorie {
+  display: inline-block;
+  background: #e0e0e0;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-bottom: 4px;
+}
+
+h3 {
+  margin-top: 16px;
+  font-size: 16px;
 }
