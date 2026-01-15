@@ -80,4 +80,12 @@ button {
 .ligne-ingredient input {
   flex: 1;
 }
+#liste-courses li {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
 
