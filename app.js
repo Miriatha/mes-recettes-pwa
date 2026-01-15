@@ -52,7 +52,12 @@ function enregistrerRecette() {
 function afficherRecettes() {
   container.innerHTML = "";
 
-  recettes.forEach(recette => {
+  const filtre = document.getElementById("filtreCategorie").value;
+
+  recettes
+    .filter(r => filtre === "Toutes" || r.categorie === filtre)
+    .forEach(recette => {
+
     const fiche = document.createElement("div");
     fiche.className = "fiche-recette";
 
@@ -130,3 +135,4 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
