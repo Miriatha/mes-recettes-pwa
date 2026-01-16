@@ -20,11 +20,15 @@ function ajouterIngredient() {
   const div = document.createElement("div");
   div.className = "ligne-ingredient";
 
-  div.innerHTML = `
-    <input type="text" placeholder="Ingrédient">
-    <input type="number" placeholder="Quantité">
-    <input type="text" placeholder="Unité">
-  `;
+div.innerHTML = `
+  <input type="text" placeholder="Ingrédient">
+  <input type="number" placeholder="Quantité">
+
+  <select>
+    ${UNITES.map(u => `<option value="${u}">${u}</option>`).join("")}
+  </select>
+`;
+
 
   ingredientsDiv.appendChild(div);
 }
@@ -37,12 +41,16 @@ function enregistrerRecette() {
 
   const ingredients = [];
   document.querySelectorAll(".ligne-ingredient").forEach(ligne => {
-    const inputs = ligne.querySelectorAll("input");
-    ingredients.push({
-      nom: inputs[0].value,
-      quantite: Number(inputs[1].value),
-      unite: inputs[2].value
-    });
+const nomIngredient = ligne.querySelector("input[type='text']").value;
+const quantite = Number(ligne.querySelector("input[type='number']").value);
+const unite = ligne.querySelector("select").value;
+
+ingredients.push({
+  nom: nomIngredient,
+  quantite,
+  unite
+});
+
   });
 
   const recette = {
@@ -147,5 +155,6 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
 
 
