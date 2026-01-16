@@ -86,6 +86,9 @@ const recette = {
   afficherRecettes();
   viderFormulaire();
 }
+document.getElementById("image").value = "";
+document.getElementById("preview").style.display = "none";
+imageBase64 = null;
 
 function afficherRecettes() {
   container.innerHTML = "";
@@ -173,6 +176,7 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
 
 
 
