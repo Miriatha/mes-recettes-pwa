@@ -1,3 +1,19 @@
+let imageBase64 = null;
+
+document.getElementById("image").addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    imageBase64 = e.target.result;
+    const preview = document.getElementById("preview");
+    preview.src = imageBase64;
+    preview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
 const UNITES = [
   "g",
   "kg",
@@ -53,14 +69,16 @@ ingredients.push({
 
   });
 
-  const recette = {
-    id: Date.now(),
-    nom,
-    categorie,
-    ingredients,
-    preparation,
-    cuisson
-  };
+const recette = {
+  id: Date.now(),
+  nom,
+  categorie,
+  image: imageBase64,
+  ingredients,
+  preparation,
+  cuisson
+};
+
 
   recettes.push(recette);
   localStorage.setItem("recettes", JSON.stringify(recettes));
@@ -155,6 +173,7 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
 
 
 
