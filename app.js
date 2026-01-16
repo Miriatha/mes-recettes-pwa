@@ -1,69 +1,86 @@
 // ===== DONNÉES =====
-const UNITES = ["g", "kg", "ml", "cl", "l", "pièce"];
-
-let recettes = [];
-let imageBase64 = null;
+var UNITES = ["g", "kg", "ml", "cl", "l", "pièce"];
+var recettes = [];
+var imageBase64 = null;
 
 // ===== IMAGE =====
-const imageInput = document.getElementById("image");
-const preview = document.getElementById("preview");
+window.addEventListener("DOMContentLoaded", function () {
+  var imageInput = document.getElementById("image");
+  var preview = document.getElementById("preview");
 
-if (imageInput) {
-  imageInput.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
+  if (imageInput) {
+    imageInput.addEventListener("change", function () {
+      var file = imageInput.files[0];
+      if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      imageBase64 = e.target.result;
-      preview.src = imageBase64;
-      preview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
-}
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        imageBase64 = e.target.result;
+        preview.src = imageBase64;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+});
 
 // ===== INGREDIENT =====
 function ajouterIngredient() {
-  const div = document.createElement("div");
+  var container = document.getElementById("ingredients");
 
-  div.innerHTML = `
-    <input type="text" placeholder="Ingrédient">
-    <input type="number" placeholder="Quantité">
-    <select>
-      ${UNITES.map(u => `<option value="${u}">${u}</option>`).join("")}
-    </select>
-  `;
+  var div = document.createElement("div");
 
-  document.getElementById("ingredients").appendChild(div);
+  var inputNom = document.createElement("input");
+  inputNom.type = "text";
+  inputNom.placeholder = "Ingrédient";
+
+  var inputQte = document.createElement("input");
+  inputQte.type = "number";
+  inputQte.placeholder = "Quantité";
+
+  var select = document.createElement("select");
+  for (var i = 0; i < UNITES.length; i++) {
+    var option = document.createElement("option");
+    option.value = UNITES[i];
+    option.textContent = UNITES[i];
+    select.appendChild(option);
+  }
+
+  div.appendChild(inputNom);
+  div.appendChild(inputQte);
+  div.appendChild(select);
+
+  container.appendChild(div);
 }
 
 // ===== ENREGISTRER =====
 function enregistrerRecette() {
-  const nom = document.getElementById("nom").value;
-  const categorie = document.getElementById("categorie").value;
-  const preparation = document.getElementById("preparation").value;
-  const cuisson = document.getElementById("cuisson").value;
+  var nom = document.getElementById("nom").value;
+  var categorie = document.getElementById("categorie").value;
+  var preparation = document.getElementById("preparation").value;
+  var cuisson = document.getElementById("cuisson").value;
 
-  const ingredients = [];
-  document.querySelectorAll("#ingredients div").forEach(div => {
-    const inputs = div.querySelectorAll("input");
-    const unite = div.querySelector("select").value;
+  var ingredients = [];
+  var lignes = document.querySelectorAll("#ingredients div");
+
+  for (var i = 0; i < lignes.length; i++) {
+    var inputs = lignes[i].getElementsByTagName("input");
+    var select = lignes[i].getElementsByTagName("select")[0];
 
     ingredients.push({
       nom: inputs[0].value,
       quantite: inputs[1].value,
-      unite: unite
+      unite: select.value
     });
-  });
+  }
 
-  const recette = {
-    nom,
-    categorie,
+  var recette = {
+    nom: nom,
+    categorie: categorie,
     image: imageBase64,
-    ingredients,
-    preparation,
-    cuisson
+    ingredients: ingredients,
+    preparation: preparation,
+    cuisson: cuisson
   };
 
   recettes.push(recette);
@@ -73,20 +90,28 @@ function enregistrerRecette() {
 
 // ===== AFFICHER =====
 function afficherRecettes() {
-  const container = document.getElementById("recettes");
+  var container = document.getElementById("recettes");
   container.innerHTML = "";
 
-  recettes.forEach(recette => {
-    const div = document.createElement("div");
+  for (var i = 0; i < recettes.length; i++) {
+    var r = recettes[i];
+
+    var div = document.createElement("div");
     div.className = "fiche";
 
-    div.innerHTML = `
-      ${recette.image ? `<img src="${recette.image}" class="image-recette">` : ""}
-      <strong>${recette.nom}</strong> (${recette.categorie})
-    `;
+    if (r.image) {
+      var img = document.createElement("img");
+      img.src = r.image;
+      img.className = "image-recette";
+      div.appendChild(img);
+    }
+
+    var titre = document.createElement("strong");
+    titre.textContent = r.nom + " (" + r.categorie + ")";
+    div.appendChild(titre);
 
     container.appendChild(div);
-  });
+  }
 }
 
 // ===== RESET =====
@@ -96,5 +121,7 @@ function viderFormulaire() {
   document.getElementById("cuisson").value = "";
   document.getElementById("ingredients").innerHTML = "";
   imageBase64 = null;
-  preview.style.display = "none";
+
+  var preview = document.getElementById("preview");
+  if (preview) preview.style.display = "none";
 }
