@@ -1,3 +1,15 @@
+const UNITES = [
+  "g",
+  "kg",
+  "ml",
+  "cl",
+  "l",
+  "pièce",
+  "cuillère à café",
+  "cuillère à soupe",
+  "pincée"
+];
+
 let recettes = JSON.parse(localStorage.getItem("recettes")) || [];
 
 const container = document.getElementById("recettes");
@@ -135,4 +147,5 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
 
