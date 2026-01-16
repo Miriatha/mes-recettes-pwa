@@ -7,13 +7,11 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
-  <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
 
 <body>
+
+<h1>🍽️ Mes recettes</h1>
+
 <h2>📂 Filtrer par catégorie</h2>
 <select id="filtreCategorie" onchange="afficherRecettes()">
   <option value="Toutes">Toutes</option>
@@ -21,38 +19,38 @@
   <option value="Plat">Plat</option>
   <option value="Dessert">Dessert</option>
 </select>
-  <h1>🍽️ Mes recettes</h1>
 
-  <section class="formulaire">
-    <h2>➕ Ajouter une recette</h2>
+<section class="formulaire">
+  <h2>➕ Ajouter / Modifier une recette</h2>
 
-    <input type="text" id="nom" placeholder="Nom de la recette">
+  <input type="text" id="nom" placeholder="Nom de la recette">
 
-    <select id="categorie">
-      <option value="Entrée">Entrée</option>
-      <option value="Plat">Plat</option>
-      <option value="Dessert">Dessert</option>
-    </select>
-<h3>📸 Image</h3>
-<input type="file" id="image" accept="image/*">
-<img id="preview" style="max-width:100%; display:none; margin-bottom:10px;">
+  <select id="categorie">
+    <option value="Entrée">Entrée</option>
+    <option value="Plat">Plat</option>
+    <option value="Dessert">Dessert</option>
+  </select>
 
-    <h3>🧾 Ingrédients</h3>
-    <div id="ingredients"></div>
-    <button onclick="ajouterIngredient()">+ Ajouter un ingrédient</button>
+  <h3>📸 Image</h3>
+  <input type="file" id="image" accept="image/*">
+  <img id="preview" style="max-width:100%; display:none; margin-bottom:10px;">
 
-    <h3>👩‍🍳 Préparation</h3>
-    <textarea id="preparation"></textarea>
+  <h3>🧾 Ingrédients</h3>
+  <div id="ingredients"></div>
+  <button onclick="ajouterIngredient()">+ Ajouter un ingrédient</button>
 
-    <h3>🔥 Cuisson</h3>
-    <textarea id="cuisson"></textarea>
+  <h3>👩‍🍳 Préparation</h3>
+  <textarea id="preparation"></textarea>
 
-    <button onclick="enregistrerRecette()">💾 Enregistrer</button>
-  </section>
+  <h3>🔥 Cuisson</h3>
+  <textarea id="cuisson"></textarea>
 
-  <hr>
+  <button onclick="enregistrerRecette()">💾 Enregistrer</button>
+</section>
 
-  <h2>📋 Sélection des recettes</h2>
+<hr>
+
+<h2>📋 Recettes</h2>
 <div id="recettes"></div>
 
 <hr>
@@ -60,13 +58,12 @@
 <h2>🛒 Liste de courses</h2>
 <ul id="liste-courses"></ul>
 
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
 
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
-
 </html>
-
-
-
-
-
