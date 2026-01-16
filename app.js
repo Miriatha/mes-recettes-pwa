@@ -99,7 +99,7 @@ function afficherRecettes() {
     const fiche = document.createElement("div");
     fiche.className = "fiche-recette";
 
-    fiche.innerHTML = `
+ ${recette.image ? `<img src="${recette.image}" class="image-recette">` : ""}   fiche.innerHTML = `
       <label>
         <input type="checkbox" onchange="calculerListeCourses()"
                data-id="${recette.id}">
@@ -173,6 +173,7 @@ function viderFormulaire() {
 
 ajouterIngredient();
 afficherRecettes();
+
 
 
 
